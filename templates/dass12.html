@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>DASS-12 Survey</title>
+{% endblock %}
+
+{% block body %}
+
+<!-- MENU -->
+<section class="navbar navbar-default navbar-static-top" role="navigation">
+     <div class="container">
+
+          <div class="navbar-header">
+               <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+               </button>
+
+               <!-- lOGO TEXT HERE -->
+               <a href="{{url_for('index_page')}}" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+          </div>
+
+          <!-- MENU LINKS -->
+          <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{url_for('index_page')}}" class="smoothScroll">Home</a></li>
+                    <li><a href="{{url_for('dass_12_form')}}" class="smoothScroll">DASS 12</a></li>
+                    <li><a href="{{url_for('anxiety_form')}}" class="smoothScroll">Check Anxiety</a></li>
+                    <li><a href="{{url_for('depression_form')}}" class="smoothScroll">Check Depression</a></li>
+                    <li><a href="{{url_for('stress_form')}}" class="smoothScroll">Check Stress</a></li>
+                    
+               </ul>
+          </div>
+
+     </div>
+</section>
+<section style="padding-top: 10px;" data-stellar-background-ratio="3">
+
+     
+     <div class="container">
+
+
+
+          {% if anxiety_severity: %}
+          <h4 class="alert alert-success text-center">Your Anxiety Serverity is <span class="text-danger"> {{ anxiety_severity }} </span></h4>
+          <p class="text-center"><b>Algorithm Used:</b> <span class="badge badge-info"> DecisionTreeClassifier</p>
+          {% endif %}
+
+          {% if depression_severity: %}
+          <h4 class="alert alert-success text-center">Your Depression Serverity is <span class="text-danger"> {{ depression_severity }} </span></h4>
+          <p class="text-center"><b>Algorithm Used:</b> <span class="badge badge-info"> LogisticRegression</p>
+          {% endif %}
+
+          {% if stress_severity: %}
+          <h4 class="alert alert-success text-center">Your Stress Serverity is <span class="text-danger"> {{ stress_severity }} </span></h4>
+          <p class="text-center"><b>Algorithm Used:</b> <span class="badge badge-info"> LogisticRegression</p>
+          {% endif %}
+
+
+
+          <div class="row" style="background-image: url(static/images/stress.jpg);background-repeat: no-repeat;background-size: cover;background-blend-mode: lighten !important;">
+
+
+
+               <div class="col-md-12" style="background: #FFF; opacity: 0.8;">
+                    <!-- CONTACT FORM HERE -->
+                    <form id="appointment-form" role="form" method="post" action="{{ url_for('process_dass_12_form') }}">
+
+                         <!-- SECTION TITLE -->
+                         <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
+                              <h2 class="text-center">Fill DASS-12 Form</h2>
+                              <h3 class="text-center">Check your Anxiety, Depression, and Stress together</h3>
+                         </div>
+
+                         <div class="wow fadeInUp" data-wow-delay="0.8s">
+                              {% for anxiety_question in anxiety_questions %}
+                              
+                              <h5 class="question">{{ loop.index }}# {{ anxiety_question }}</h5>
+                              
+                              <label class="form-check-label">
+                                   <input type="radio" class="form-check-input" name="a{{ loop.index }}" value="0"> Did not apply to me at all
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="a{{ loop.index }}" value="1"> Applied to me to some degree, or some of the time
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="a{{ loop.index }}" value="2"> Applied to me to a considerable degree, or a good part of time
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="a{{ loop.index }}" value="3"> Applied to me very much, or most of the time
+                              </label>
+                              
+                         
+                              
+                         {% endfor %}
+
+                         {% for depression_question in depression_questions %}
+                              
+                              <h5 class="question">{{ loop.index+4 }}# {{ depression_question }}</h5>
+                              
+                              <label class="form-check-label">
+                                   <input type="radio" class="form-check-input" name="d{{ loop.index }}" value="0"> Did not apply to me at all
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="d{{ loop.index }}" value="1"> Applied to me to some degree, or some of the time
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="d{{ loop.index }}" value="2"> Applied to me to a considerable degree, or a good part of time
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="d{{ loop.index }}" value="3"> Applied to me very much, or most of the time
+                              </label>
+                              
+                         
+                              
+                         {% endfor %}
+
+
+                         {% for stress_question in stress_questions %}
+                              
+                              <h5 class="question">{{ loop.index+8 }}# {{ stress_question }}</h5>
+                              
+                              <label class="form-check-label">
+                                   <input type="radio" class="form-check-input" name="s{{ loop.index }}" value="0"> Did not apply to me at all
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="s{{ loop.index }}" value="1"> Applied to me to some degree, or some of the time
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="s{{ loop.index }}" value="2"> Applied to me to a considerable degree, or a good part of time
+                              </label>
+                              <br>
+                              <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="s{{ loop.index }}" value="3"> Applied to me very much, or most of the time
+                              </label>
+                              
+                         
+                              
+                         {% endfor %}
+
+                    </div>
+
+                              <div class="col-md-12 col-sm-12 text-center" style="margin-bottom: 40px;">
+                                   <button type="submit" class="btn btn-success" id="cf-submit" name="submit">Click to Predict</button>
+                              </div>
+
+                              
+
+                         </div>
+                   </form>
+
+                   
+               </div>
+
+          </div>
+          
+     </div>
+</section> 
+         
+
+
+     {% endblock %}

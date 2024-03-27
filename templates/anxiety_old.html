@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DASS-42 Survey Form</title>
+</head>
+<body>
+    <a href={{url_for('index_page')}}>Main</a>
+    <h1>Anxiety 4 Questions Survey</h1>
+    <form method="POST" action="{{ url_for('process_anxiety_form') }}">
+        {% for question in questions %}
+            <p>{{ question }}</p>
+            <input type="radio" name="{{ loop.index }}" value="0"> Did not apply to me at all
+            <input type="radio" name="{{ loop.index }}" value="1"> Applied to me to some degree, or some of the time
+            <input type="radio" name="{{ loop.index }}" value="2"> Applied to me to a considerable degree, or a good part of time
+            <input type="radio" name="{{ loop.index }}" value="3"> Applied to me very much, or most of the time
+            <br><br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
