@@ -1,2 +1,2 @@
 # DASS-42-Flask
- DASS 42 Application using Machine Learning
+ I developed this application using Python. First, I pre-processed the CSV dataset by removing null values and converting certain text features to numeric. The dataset initially had 42 features, and I applied PCA to reduce it to the top 12 features. After training the model, I built a web-based application using Flask to collect user responses and classify them based on the model's predictions.
